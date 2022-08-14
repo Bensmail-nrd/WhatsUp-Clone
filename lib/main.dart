@@ -1,21 +1,25 @@
-import 'package:clone_whatsup/UI/home_screen.dart';
+import 'package:clone_whatsup/responsive/responsive_layout.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+import 'UI/mobile_layout.dart';
+import 'UI/web_layout.dart';
+
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print("Material App is about to get called");
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const HomeScreen(),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.dark()
+          .copyWith(primaryColor: const Color.fromARGB(255, 11, 40, 80)),
+      home: ResponsiveLayout(
+          MobileScreenLayout: MobileScreenLayout(),
+          WebScreenLayout: WebScreenLayout()),
     );
   }
 }

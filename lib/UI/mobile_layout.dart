@@ -1,3 +1,4 @@
+import 'package:clone_whatsup/UI/contacts_list.dart';
 import 'package:flutter/material.dart';
 
 class MobileScreenLayout extends StatelessWidget {
@@ -21,6 +22,7 @@ class MobileScreenLayout extends StatelessWidget {
                 Tab(text: "Calls"),
               ],
             )),
+        body: ContactList(),
       ),
     );
   }

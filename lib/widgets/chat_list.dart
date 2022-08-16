@@ -1,8 +1,9 @@
-import 'package:clone_whatsup/UI/message.dart';
-import 'package:clone_whatsup/utils/info.dart';
+import 'package:clone_whatsup/info.dart';
+import 'package:clone_whatsup/widgets/message.dart';
 import 'package:flutter/material.dart';
 
 import '../generated/assets.dart';
+import 'app_bars.dart';
 
 class ChatList extends StatefulWidget {
   final bool kWeb;
@@ -13,6 +14,18 @@ class ChatList extends StatefulWidget {
 }
 
 class _ChatListState extends State<ChatList> {
+  final TextEditingController _controller = TextEditingController();
+
+  final ScrollController _scroller = ScrollController();
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _scroller.animateTo(_scroller.position.maxScrollExtent + 50,
+          duration: const Duration(milliseconds: 500), curve: Curves.easeInOut);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,9 +39,8 @@ class _ChatListState extends State<ChatList> {
                       fit: BoxFit.cover,
                       image: AssetImage(Assets.assetsWhatsupBackground))),
               child: ListView.builder(
-                controller: ScrollController(),
+                controller: _scroller,
                 shrinkWrap: true,
-                reverse: true,
                 itemCount: messages.length,
                 itemBuilder: (context, index) {
                   return Message(
@@ -40,18 +52,34 @@ class _ChatListState extends State<ChatList> {
             ),
           ),
           Container(
-            padding: EdgeInsets.all(4),
+            padding: const EdgeInsets.all(4),
             child: Row(
               children: [
                 Expanded(
                   child: TextField(
+                    controller: _controller,
                     decoration: InputDecoration(
                         hintText: "write your message ...",
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(14))),
                   ),
                 ),
-                IconButton(onPressed: () {}, icon: Icon(Icons.send))
+                IconButton(
+                    onPressed: () {
+                      setState(() {
+                        messages.add({
+                          "isMe": true,
+                          "text": _controller.text,
+                          "time": DateTime.now().toString()
+                        });
+                        _controller.clear();
+                        _scroller.animateTo(
+                            _scroller.position.maxScrollExtent + 50,
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.easeIn);
+                      });
+                    },
+                    icon: const Icon(Icons.send))
               ],
             ),
           )
@@ -59,44 +87,4 @@ class _ChatListState extends State<ChatList> {
       ),
     );
   }
-}
-
-class AppBarChatWeb extends AppBar {
-  AppBarChatWeb({Key? key})
-      : super(
-          key: key,
-          title: Text("Contact Name"),
-          leadingWidth: 60,
-          leading: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: CircleAvatar(
-                backgroundImage: NetworkImage(
-                    "https://upload.wikimedia.org/wikipedia/commons/8/85/Elon_Musk_Royal_Society_%28crop1%29.jpg")),
-          ),
-          actions: [
-            IconButton(onPressed: () {}, icon: Icon(Icons.search)),
-            IconButton(onPressed: () {}, icon: Icon(Icons.more_vert_outlined)),
-          ],
-        );
-}
-
-class AppBarChatMobile extends AppBar {
-  AppBarChatMobile({Key? key})
-      : super(
-          key: key,
-          title: Text("Contact Name"),
-          leadingWidth: 60,
-          leading: Builder(builder: (context) {
-            return IconButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                icon: Icon(Icons.arrow_back));
-          }),
-          actions: [
-            IconButton(onPressed: () {}, icon: Icon(Icons.video_call)),
-            IconButton(onPressed: () {}, icon: Icon(Icons.phone)),
-            IconButton(onPressed: () {}, icon: Icon(Icons.more_vert)),
-          ],
-        );
 }

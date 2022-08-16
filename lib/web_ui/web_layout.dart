@@ -1,9 +1,9 @@
-import 'package:clone_whatsup/UI/contacts_list.dart';
-import 'package:clone_whatsup/UI/search.dart';
-import 'package:clone_whatsup/UI/web_profile.dart';
+import 'package:clone_whatsup/web_ui/web_profile.dart';
+import 'package:clone_whatsup/widgets/contacts_list.dart';
+import 'package:clone_whatsup/widgets/search.dart';
 import 'package:flutter/material.dart';
 
-import 'chat_list.dart';
+import '../widgets/chat_list.dart';
 
 class WebScreenLayout extends StatelessWidget {
   const WebScreenLayout({Key? key}) : super(key: key);
@@ -16,23 +16,17 @@ class WebScreenLayout extends StatelessWidget {
           Expanded(
             flex: 3,
             child: Column(
-              children: [
+              children: const [
                 Profile(),
                 Search(),
                 Expanded(child: ContactList()),
               ],
             ),
           ),
-          Expanded(
+          const Expanded(
             flex: 7,
-            child: Column(
-              children: [
-                // WebAppBar(),
-                Expanded(
-                    child: ChatList(
-                  kWeb: true,
-                )),
-              ],
+            child: ChatList(
+              kWeb: true,
             ),
           ),
         ],

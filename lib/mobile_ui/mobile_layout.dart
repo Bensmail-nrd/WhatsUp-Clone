@@ -1,4 +1,4 @@
-import 'package:clone_whatsup/UI/contacts_list.dart';
+import 'package:clone_whatsup/widgets/contacts_list.dart';
 import 'package:flutter/material.dart';
 
 class MobileScreenLayout extends StatelessWidget {
@@ -12,8 +12,8 @@ class MobileScreenLayout extends StatelessWidget {
         appBar: AppBar(
             title: const Text("What's Up"),
             actions: [
-              IconButton(onPressed: () {}, icon: Icon(Icons.search)),
-              IconButton(onPressed: () {}, icon: Icon(Icons.more_vert)),
+              IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+              IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert)),
             ],
             bottom: const TabBar(
               tabs: [
@@ -22,7 +22,7 @@ class MobileScreenLayout extends StatelessWidget {
                 Tab(text: "Calls"),
               ],
             )),
-        body: ContactList(),
+        body: const ContactList(),
       ),
     );
   }

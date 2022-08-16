@@ -1,6 +1,7 @@
-import 'package:clone_whatsup/UI/chat_list.dart';
-import 'package:clone_whatsup/utils/info.dart';
+import 'package:clone_whatsup/info.dart';
 import 'package:flutter/material.dart';
+
+import 'chat_list.dart';
 
 class ContactList extends StatelessWidget {
   const ContactList({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class ContactList extends StatelessWidget {
           onTap: () {
             if (MediaQuery.of(context).size.width <= 700) {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => ChatList(kWeb: false),
+                builder: (context) => const ChatList(kWeb: false),
               ));
             }
           },

@@ -15,7 +15,6 @@ class Message extends StatefulWidget {
 
 class _MessageState extends State<Message> {
   double _bottom = 0;
-
   double _opacity = 0;
 
   @override
